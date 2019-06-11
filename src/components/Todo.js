@@ -16,6 +16,22 @@ useEffect(() => {
       }
       setTodoList(todos);
     });
+    return ()=>{
+      console.log("cleanup");
+    }
+  },[todoName]);
+
+  const mouseMoveHandler = event => {
+      console.log(event.clientX, event.clientY);
+  }
+
+  useEffect(()=>{
+    document.addEventListener('mousemove', mouseMoveHandler );
+    // return is used to write clean up code
+    return(()=>{
+      // Remove the mousemove listener that executes mouseMoveHandler
+      document.removeEventListener('mousemove', mouseMoveHandler);
+    });
   },[]);
 
   const inputChangeHandler = (event)=> {
