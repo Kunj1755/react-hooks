@@ -5,7 +5,7 @@ const todo = props => {
   const [todoName, setTodoName] = useState('');
   const [todoList, setTodoList] = useState([]);
 
-// Pass a function to useEffect()
+// Pass a function to useEffect() as its 1st argument
 useEffect(() => {
     axios.get('https://fir-6cd72.firebaseio.com/todo.json').then(result => {
       // console.log(result);
@@ -16,7 +16,7 @@ useEffect(() => {
       }
       setTodoList(todos);
     });
-  });
+  },[]);
 
   const inputChangeHandler = (event)=> {
     setTodoName(event.target.value);
