@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const todo = props => {
+const Todo = props => {
   const [todoName, setTodoName] = useState('');
   const [todoList, setTodoList] = useState([]);
 
@@ -58,6 +58,6 @@ useEffect(() => {
       {todoList.map(todo=> <li key={todo.id}>{todo.name}</li>)}
       </ul>
     </React.Fragment>
-  );
-};
-export default todo;
+);
+}
+export default Todo;
