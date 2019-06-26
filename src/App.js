@@ -1,25 +1,35 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import Todo from "./components/Todo";
 import Header from "./components/Header";
 import Auth from "./components/Auth";
+import AuthContext from "./auth-context";
 
-const App = (props) => {
+const App = props => {
+  const [page, setPage] = useState("auth");
+  const [authStatus, setAuthStatus] = useState(false);
 
-const [page, setPage] = useState('auth');
+  const switchPage = pageName => {
+    console.log(pageName);
+    setPage(pageName);
+  };
 
-const switchPage = (pageName) => {
-  console.log(pageName);
- setPage(pageName);
-}
-    return (
-      <div className="App">
-        <Header onLoadTodos={switchPage.bind(this,'todos')}
-        onLoadAuth = {switchPage.bind(this,'auth')}
+  const login = () => {
+    setAuthStatus(true);
+  };
+
+  return (
+    <div className="App">
+      {/* Overriding Context values using 'value' property */}
+      {/* login is reference to login function */}
+      <AuthContext.Provider value={{ status: authStatus, login: login }}>
+        <Header
+          onLoadTodos={switchPage.bind(this, "todos")}
+          onLoadAuth={switchPage.bind(this, "auth")}
         />
-        <hr/>
-        {page==='auth'? <Auth/> :  <Todo/> }
-       
-      </div>
-    );
-  }
+        <hr />
+        {page === "auth" ? <Auth /> : <Todo />}
+      </AuthContext.Provider>
+    </div>
+  );
+};
 export default App;
