@@ -3,7 +3,7 @@ import axios from "axios";
 
 const Todo = props => {
   const [todoName, setTodoName] = useState("");
-  const [submittedTodo, setSubmittedTodo] = useState(null);
+  //const [submittedTodo, setSubmittedTodo] = useState(null);
   // As we are using useReducer. Comment this line of code
   //const [todoList, setTodoList] = useState([]);
 
@@ -66,12 +66,12 @@ const Todo = props => {
     };
   }, []);
 
-  useEffect(() => {
-    if (submittedTodo) {
-      // setTodoList(todoList.concat(submittedTodo));
-      dispatch({ type: "ADD", payload: submittedTodo });
-    }
-  }, [submittedTodo]);
+  // useEffect(() => {
+  //   if (submittedTodo) {
+  //     // setTodoList(todoList.concat(submittedTodo));
+  //     dispatch({ type: "ADD", payload: submittedTodo });
+  //   }
+  // }, [submittedTodo]);
 
   const inputChangeHandler = event => {
     setTodoName(event.target.value);
@@ -82,7 +82,8 @@ const Todo = props => {
       .then(res => {
         setTimeout(() => {
           const todoItem = { id: res.data.name, name: todoName };
-          setSubmittedTodo(todoItem);
+          //setSubmittedTodo(todoItem);
+          dispatch({ type: "ADD", payload: todoItem });
         }, 3000);
       })
       .catch(err => {
