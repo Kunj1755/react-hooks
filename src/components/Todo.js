@@ -90,6 +90,15 @@ const Todo = props => {
       });
   };
 
+  const todoRemoveHandler = todoId => {
+    axios
+      .delete(`https://fir-6cd72.firebaseio.com/${todoId}.json`)
+      .then(res => {
+        dispatch({ type: "REMOVE", payload: todoId });
+      })
+      .catch(err => console.log(err));
+  };
+
   return (
     <React.Fragment>
       <input
@@ -103,7 +112,9 @@ const Todo = props => {
       </button>
       <ul>
         {todoList.map(todo => (
-          <li key={todo.id}>{todo.name}</li>
+          <li key={todo.id} onClick={todoRemoveHandler.bind(this, todo.id)}>
+            {todo.name}
+          </li>
         ))}
       </ul>
     </React.Fragment>
