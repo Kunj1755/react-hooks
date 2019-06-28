@@ -1,11 +1,12 @@
-import React, { useState, useEffect, useReducer } from "react";
+import React, { useEffect, useReducer, useRef } from "react";
 import axios from "axios";
 
 const Todo = props => {
-  const [todoName, setTodoName] = useState("");
+  //const [todoName, setTodoName] = useState("");
   //const [submittedTodo, setSubmittedTodo] = useState(null);
   // As we are using useReducer. Comment this line of code
   //const [todoList, setTodoList] = useState([]);
+  const todoInputRef = useRef();
 
   //React will pass these arguments automatically for us
   // state -> latest state
@@ -51,7 +52,7 @@ const Todo = props => {
     return () => {
       console.log("cleanup");
     };
-  }, [todoName]);
+  }, []);
 
   const mouseMoveHandler = event => {
     console.log(event.clientX, event.clientY);
@@ -73,10 +74,12 @@ const Todo = props => {
   //   }
   // }, [submittedTodo]);
 
-  const inputChangeHandler = event => {
-    setTodoName(event.target.value);
-  };
+  // const inputChangeHandler = event => {
+  //   setTodoName(event.target.value);
+  // };
+
   const todoAddHandler = () => {
+    const todoName = todoInputRef.current.value;
     axios
       .post("https://fir-6cd72.firebaseio.com/todo.json", { name: todoName })
       .then(res => {
@@ -105,8 +108,10 @@ const Todo = props => {
       <input
         type="text"
         placeholder="Todo"
-        onChange={inputChangeHandler}
-        value={todoName}
+        // Use 'useRef' hook instead of the below 2 attributes
+        // onChange={inputChangeHandler}
+        // value={todoName}
+        ref={todoInputRef}
       />
       <button type="button" onClick={todoAddHandler}>
         Add
