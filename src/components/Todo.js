@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer, useRef } from "react";
+import React, { useState, useEffect, useReducer, useRef, useMemo } from "react";
 import axios from "axios";
 import List from "./List";
 
@@ -135,7 +135,13 @@ const Todo = props => {
           </li>
         ))}
       </ul> */}
-      <List items={todoList} onClick={todoRemoveHandler} />
+      {/* If todoList deos not change, react will have the cached value in the <List>. useMemo does this storage, retieval, recreation, */}
+      {useMemo(
+        () => (
+          <List items={todoList} onClick={todoRemoveHandler} />
+        ),
+        [todoList]
+      )}
     </React.Fragment>
   );
 };
